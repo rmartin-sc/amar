@@ -1,4 +1,4 @@
-# AMARI (Analyze My Attendance Records In...)
+# AMAR (Analyze My Attendance Records)
 
 A CLI tool for analyzing your MS Teams attendance records.  (Useful for teachers using MS Teams for online classes.)
 
@@ -6,4 +6,4 @@ A CLI tool for analyzing your MS Teams attendance records.  (Useful for teachers
 
 Just run the command below with the path to a folder containing MS Teams attendance record files.  The tool assumes that the files start with the name `meetingAttendance`.
 
-`amari <path>`
+`npx amar <path>`

@@ -260,11 +260,11 @@ function showAttendanceReport(attendanceRecord) {
 }
 
 if ( process.argv.length !== 3 ) {
-    console.log("Analyze My Attendance Records In... (amari)");
+    console.log("Analyze My Attendance Records (amar)");
     console.log("Version 1.0.0");
     console.log();
     console.log("Usage:");
-    console.log("amari <path>");
+    console.log("amar <path>");
     console.log("");
     console.log("<path> must a path to a directory containing MS Teams attendance reports with names starting with 'meetingAttendance'")
 } else {

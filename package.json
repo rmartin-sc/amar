@@ -1,5 +1,5 @@
 {
-  "name": "amari",
+  "name": "amar",
   "type": "module",
   "version": "1.0.0",
   "description": "Analyze your attendance records from MS Teams (useful for teachers using MS Teams for online classes)",
@@ -9,7 +9,7 @@
     "main": "node src/index.js"
   },
   "bin": {
-    "amari": "./src/index.js"
+    "amar": "./src/index.js"
   },
   "author": "Rodney Martin",
   "license": "MIT",
