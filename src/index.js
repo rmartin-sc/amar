@@ -261,7 +261,7 @@ function showAttendanceReport(attendanceRecord) {
 
 if ( process.argv.length !== 3 ) {
     console.log("Analyze My Attendance Records (amar)");
-    console.log("Version 1.0.0");
+    console.log("Version 1.0.1");
     console.log();
     console.log("Usage:");
     console.log("amar <path>");

@@ -1,7 +1,7 @@
 {
   "name": "amar",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Analyze your attendance records from MS Teams (useful for teachers using MS Teams for online classes)",
   "main": "./src/index.js",
   "scripts": {
