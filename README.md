@@ -13,7 +13,7 @@ Just run the command below with the path to a folder containing MS Teams attenda
 ### Assumptions made by amar:
 - Attendance report file names start with the name `meetingAttendance`
 - All attendance reports in the folder pertain to *one* class
-- Any presence at all (even showing joining for 1min out of a 2hr meeting) counts as presence
+- Any presence at all (e.g. joining for 1min out of a 2hr meeting) counts as presence
 
 `amar <path>`
 
