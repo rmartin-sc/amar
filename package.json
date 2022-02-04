@@ -1,0 +1,21 @@
+{
+  "name": "amari",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Analyze your attendance records from MS Teams (useful for teachers using MS Teams for online classes)",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "main": "node src/index.js"
+  },
+  "bin": {
+    "amari": "./src/index.js"
+  },
+  "author": "Rodney Martin",
+  "license": "MIT",
+  "repository": "none",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "csv-parse": "^4.16.3"
+  }
+}
