@@ -41,11 +41,12 @@ async function getClasslist(dirPath=".") {
                 i += 1; 
             }
             firstLine = false;
-        }
+        } else {
 
-        const fname = record[fnameIdx].replace(/\s/g, "").toUpperCase();
-        const lname = record[lnameIdx].replace(/\s/g, "").toUpperCase();
-        classlist.add(`${fname} ${lname}`);
+            const fname = record[fnameIdx].replace(/\s/g, "").toUpperCase();
+            const lname = record[lnameIdx].replace(/\s/g, "").toUpperCase();
+            classlist.add(`${fname} ${lname}`);
+        }
     }
 
     return classlist;
@@ -114,9 +115,7 @@ async function getAttendanceDataFromAttendanceList(filePath) {
     return { date: isoDateStr(sessionDate), studentsInAttendance }
 }
 
-async function getAttendanceRecord(attendanceFilepaths) {
-
-    const studentsEnrolled = await getClasslist(dirPath);
+async function getAttendanceRecord(attendanceFilepaths, studentsEnrolled) {
 
     const data = [];
     let studentsInAttendance = new Set();
@@ -204,8 +203,8 @@ function showAttendanceReport(attendanceRecord) {
         console.log(" ".repeat(leftPad) + "-".repeat(sessions.length));
     }
 
-    var enrolledData = [];
-    var unenrolledData = [];
+    let enrolledData = [];
+    let unenrolledData = [];
     const numSessions = attendanceRecord.sessions.length;
     let longestName = 0;
     for ( const student of attendanceRecord.studentsInAttendance ) {
@@ -238,6 +237,20 @@ function showAttendanceReport(attendanceRecord) {
         }
     }
 
+    // Handle enrolled students that have never been present
+    const enrolled = attendanceRecord.studentsEnrolled
+    const attended = attendanceRecord.studentsInAttendance
+    // Set difference: enrolled - attended
+    const absentees = new Set(
+        [...enrolled].filter( s => !attended.has(s) )
+    )
+    absentees.forEach( s => enrolledData.push({ 
+        fname: s.split(" ")[0],
+        lname: s.split(" ")[1],
+        record: Array(numSessions).fill("A"),
+        ratio: `0/${numSessions}`
+    }))
+
     console.log(chalk.gray("Sessions:"));
     for ( const session of attendanceRecord.sessions) {
         console.log(chalk.gray(session.date));
@@ -245,7 +258,7 @@ function showAttendanceReport(attendanceRecord) {
     
     if ( enrolledData.length ) {
         console.log();
-        console.log(chalk.gray("Enrolled Attendees:"));
+        console.log(chalk.gray(`Enrolled Attendees (${enrolledData.length}):`));
         showSessionHeadings(attendanceRecord.sessions, longestName+9);
         for ( const record of enrolledData.sort(byRatio) ) {
             showSingleRecord(record, longestName);
@@ -253,10 +266,12 @@ function showAttendanceReport(attendanceRecord) {
         console.log();
         console.log(chalk.gray("Unenrolled Attendees:"));
     }
+
     showSessionHeadings(attendanceRecord.sessions, longestName+9);
     for ( const record of unenrolledData.sort(byRatio) ) {
         showSingleRecord(record, longestName);
     }
+
 }
 
 if ( process.argv.length !== 3 ) {
@@ -274,7 +289,9 @@ if ( process.argv.length !== 3 ) {
         console.log(`The path ${dirPath} does not exist`);
     } else {
 
-        let attendanceRecord = await getAttendanceRecord(await getAttendanceFilepaths(dirPath));
+        const studentsEnrolled = await getClasslist(dirPath);
+        const attendanceFilePaths = await getAttendanceFilepaths(dirPath)
+        let attendanceRecord = await getAttendanceRecord(attendanceFilePaths, studentsEnrolled);
     
         showAttendanceReport(attendanceRecord);
     }
